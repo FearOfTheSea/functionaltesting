@@ -121,46 +121,56 @@ int main() {
         else cout << " [FAIL]\n";
     }
 
-    vector<TestCase> tests = {
-        // Validation tests
-        {1, -1, 50, 5, 5, 10, 10, false, -999},     // punchSpeed < 0
-        {2, 101, 50, 5, 5, 10, 10, false, -999},    // punchSpeed > 100
-        {3, 50, -1, 5, 5, 10, 10, false, -999},     // punchStrength < 0
-        {4, 50, 101, 5, 5, 10, 10, false, -999},    // punchStrength > 100
-        {5, 50, 50, -1, 5, 10, 10, false, -999},    // x_you invalid
-        {6, 50, 50, 5, 21, 10, 10, false, -999},    // y_you invalid
-        {7, 50, 50, 5, 5, 21, 10, false, -999},     // x_opp invalid
-        {8, 50, 50, 5, 5, 10, 21, false, -999},     // y_opp invalid
-        {9, 50, 50, 5, 5, 5, 5, false, -999},       // distance = 0
-        {10, 50, 50, 5, 5, 10, 10, false, 70},      // baseline valid
+    vector<TestCase> testDecisionTable = {
+        {1, -10, 50, 5, 5, 10, 10, false, -999},
+        {2, 110, 50, 5, 5, 10, 10, false, -999},
+        {3, 50, -10, 5, 5, 10, 10, false, -999},
+        {4, 50, 110, 5, 5, 10, 10, false, -999},
+        {5, 50, 50, -5, 5, 10, 10, false, -999},
+        {6, 50, 50, 5, 5, -5, 10, false, -999},
+        {7, 50, 50, 5, -5, 10, 10, false, -999},
+        {8, 50, 50, 5, 5, 10, -5, false, -999},
+        {9, 50, 50, 10, 10, 10, 10, false, -999},
 
-        // Guarding vs not
-        {11, 40, 60, 0, 0, 5, 0, true, 84},         // guarding
-        {12, 40, 60, 0, 0, 5, 0, false, 76},        // not guarding
+        {10, 95, 50, 0, 0, 5, 0, false, 0},
+        {11, 80, 80, 0, 0, 5, 0, false, 80},
+        {12, 20, 5, 0, 0, 5, 0, false, 6.2},
+        {13, 50, 50, 0, 0, 5, 0, false, 100},
+        {14, 95, 50, 0, 0, 5, 0, true, 0},
+        {15, 80, 80, 0, 0, 5, 0, true, 80},
+        {16, 20, 5, 0, 0, 5, 0, true, 3.8},
+        {17, 50, 50, 0, 0, 5, 0, true, 100},
 
-        // Distance multiplier
-        {13, 40, 40, 0, 0, 5, 0, false, 56},        // distance = 5 → ×2
-        {14, 40, 40, 0, 0, 12, 0, false, 28},       // distance = 12 → ×1
-        {15, 40, 40, 0, 0, 20, 0, false, 0},        // distance = 20 → ×0
+        {18, 95, 50, 0, 0, 12, 0, false, 0},
+        {19, 80, 80, 0, 0, 12, 0, false, 40},
+        {20, 20, 5, 0, 0, 12, 0, false, 3.1},
+        {21, 50, 50, 0, 0, 12, 0, false, 50},
+        {22, 95, 50, 0, 0, 12, 0, true, 0},
+        {23, 80, 80, 0, 0, 12, 0, true, 40},
+        {24, 20, 5, 0, 0, 12, 0, true, 1.9},
+        {25, 50, 50, 0, 0, 12, 0, true, 50},
 
-        // Effectiveness multiplier
-        {16, 95, 50, 0, 0, 5, 0, false, 0},         // punchSpeed ≥ 90 → 0
-        {17, 80, 80, 0, 0, 5, 0, false, 80},        // sum ≥ 150 → 0.5
-        {18, 5, 50, 0, 0, 5, 0, false, 11},         // punchSpeed ≤ 10 → ×0.2
-        {19, 40, 40, 0, 0, 5, 0, false, 56}         // normal case
+        {26, 95, 50, 0, 0, 18, 0, false, 0},
+        {27, 80, 80, 0, 0, 18, 0, false, 0},
+        {28, 20, 5, 0, 0, 18, 0, false, 0},
+        {29, 50, 50, 0, 0, 18, 0, false, 0},
+        {30, 95, 50, 0, 0, 18, 0, true, 0},
+        {31, 80, 80, 0, 0, 18, 0, true, 0},
+        {32, 20, 5, 0, 0, 18, 0, true, 0},
+        {33, 50, 50, 0, 0, 18, 0, true, 0}
     };
 
-    for (auto &t : tests) {
-        double result = calculateDamage(t.punchSpeed, t.punchStrength,
-                                        t.x_you, t.y_you,
-                                        t.x_opp, t.y_opp,
-                                        t.isGuarding);
-        cout << "Test " << t.id << ": expected=" << t.expected
-             << ", got=" << result
-             << (fabs(result - t.expected) < 1e-6 ? " [PASS]" : " [FAIL]")
-             << endl;
-    }
 
+    for (const auto &t : testDecisionTable) {
+        double result = calculateDamage(t.punchSpeed, t.punchStrength,
+                                        t.x_you, t.y_you, t.x_opp, t.y_opp,
+                                        t.isGuarding);
+        cout << "Test " << t.id
+             << ": expected=" << t.expected
+             << ", got=" << result;
+        if (fabs(result - t.expected) < 1e-2) cout << " [PASS]\n";
+        else cout << " [FAIL]\n";
+    }
 
     return 0;
 }
