@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
@@ -180,64 +181,75 @@ int main() {
     //     if (fabs(result - t.expected) < 1e-2) cout << " [PASS]\n";
     //     else cout << " [FAIL]\n";
     // }
+    //
+    // vector<PathTestCase> pathTests = {
+    //     {1, "Path 1: Invalid input (punchSpeed > 100)",
+    //      150, 50, 10, 10, 15, 15, false, -999},
+    //
+    //     {2, "Path 2: Invalid input (distance == 0)",
+    //      50, 50, 10, 10, 10, 10, false, -999},
+    //
+    //     {3, "Path 3: Guarding, close range, punchStrength >= 90",
+    //      60, 95, 0, 0, 5, 0, true, 0},
+    //
+    //     {4, "Path 4: Not guarding, medium range, punchSpeed + punchStrength >= 150",
+    //      80, 80, 0, 0, 12, 0, false, 40},
+    //
+    //     {5, "Path 5: Not guarding, far range, punchSpeed <= 10",
+    //      5, 50, 0, 0, 20, 0, false, 0},
+    //
+    //     {6, "Path 6: Guarding, close range, normal effectiveness",
+    //      50, 50, 0, 0, 8, 0, true, 100},
+    //
+    //     {7, "Path 7: Guarding, medium range, normal effectiveness",
+    //      50, 50, 0, 0, 12, 0, true, 50},
+    //
+    //     {8, "Path 8: Guarding, far range, normal effectiveness",
+    //      50, 50, 0, 0, 18, 0, true, 0},
+    //
+    //     {9, "Path 9: Not guarding, close range, normal effectiveness",
+    //      50, 50, 0, 0, 5, 0, false, 100}
+    // };
+    //
+    // int passed = 0;
+    // int failed = 0;
+    //
+    // for (const auto &t : pathTests) {
+    //     double result = calculateDamage(t.punchSpeed, t.punchStrength,
+    //                                     t.x_you, t.y_you, t.x_opp, t.y_opp,
+    //                                     t.isGuarding);
+    //
+    //     bool pass = fabs(result - t.expected) < 1e-2;
+    //
+    //     cout << "Test Case " << t.id << ": " << t.pathDescription << endl;
+    //     cout << "  Parameters: calculateDamage("
+    //          << t.punchSpeed << ", " << t.punchStrength << ", "
+    //          << t.x_you << ", " << t.y_you << ", "
+    //          << t.x_opp << ", " << t.y_opp << ", "
+    //          << (t.isGuarding ? "true" : "false") << ")" << endl;
+    //     cout << "  Expected: " << t.expected << endl;
+    //     cout << "  Got:      " << result << endl;
+    //     cout << "  Result:   " << (pass ? "[PASS]" : "[FAIL]") << endl;
+    //     cout << endl;
+    //
+    //     if (pass) passed++;
+    //     else failed++;
+    // }
+    //
+    // cout << "=== SUMMARY ===" << endl;
+    // cout << "Total Tests: " << pathTests.size() << endl;
+    // cout << "Passed: " << passed << endl;
+    // cout << "Failed: " << failed << endl;
+    std::cout << std::fixed << setprecision(2);
 
-    vector<PathTestCase> pathTests = {
-        {1, "Path 1: Invalid input (punchSpeed > 100)",
-         150, 50, 10, 10, 15, 15, false, -999},
-
-        {2, "Path 2: Invalid input (distance == 0)",
-         50, 50, 10, 10, 10, 10, false, -999},
-
-        {3, "Path 3: Guarding, close range, punchStrength >= 90",
-         60, 95, 0, 0, 5, 0, true, 0},
-
-        {4, "Path 4: Not guarding, medium range, punchSpeed + punchStrength >= 150",
-         80, 80, 0, 0, 12, 0, false, 40},
-
-        {5, "Path 5: Not guarding, far range, punchSpeed <= 10",
-         5, 50, 0, 0, 20, 0, false, 0},
-
-        {6, "Path 6: Guarding, close range, normal effectiveness",
-         50, 50, 0, 0, 8, 0, true, 100},
-
-        {7, "Path 7: Guarding, medium range, normal effectiveness",
-         50, 50, 0, 0, 12, 0, true, 50},
-
-        {8, "Path 8: Guarding, far range, normal effectiveness",
-         50, 50, 0, 0, 18, 0, true, 0},
-
-        {9, "Path 9: Not guarding, close range, normal effectiveness",
-         50, 50, 0, 0, 5, 0, false, 100}
-    };
-
-    int passed = 0;
-    int failed = 0;
-
-    for (const auto &t : pathTests) {
-        double result = calculateDamage(t.punchSpeed, t.punchStrength,
-                                        t.x_you, t.y_you, t.x_opp, t.y_opp,
-                                        t.isGuarding);
-
-        bool pass = fabs(result - t.expected) < 1e-2;
-
-        cout << "Test Case " << t.id << ": " << t.pathDescription << endl;
-        cout << "  Parameters: calculateDamage("
-             << t.punchSpeed << ", " << t.punchStrength << ", "
-             << t.x_you << ", " << t.y_you << ", "
-             << t.x_opp << ", " << t.y_opp << ", "
-             << (t.isGuarding ? "true" : "false") << ")" << endl;
-        cout << "  Expected: " << t.expected << endl;
-        cout << "  Got:      " << result << endl;
-        cout << "  Result:   " << (pass ? "[PASS]" : "[FAIL]") << endl;
-        cout << endl;
-
-        if (pass) passed++;
-        else failed++;
-    }
-
-    cout << "=== SUMMARY ===" << endl;
-    cout << "Total Tests: " << pathTests.size() << endl;
-    cout << "Passed: " << passed << endl;
-    cout << "Failed: " << failed << endl;
+    std::cout << "Path 1: " << calculateDamage(-5, 0, 0, 0, 0, 0, 0) << std::endl;
+    std::cout << "Path 2: " << calculateDamage(50, 50, 0, 0, 30, 40, 0) << std::endl;
+    std::cout << "Path 3: " << calculateDamage(95, 95, 0, 0, 5, 0, 1) << std::endl;
+    std::cout << "Path 4: " << calculateDamage(95, 95, 0, 0, 8, 0, 0) << std::endl;
+    std::cout << "Path 5: " << calculateDamage(95, 95, 0, 0, 12, 0, 0) << std::endl;
+    std::cout << "Path 6: " << calculateDamage(95, 95, 0, 0, 18, 0, 0) << std::endl;
+    std::cout << "Path 7: " << calculateDamage(85, 85, 0, 0, 8, 0, 0) << std::endl;
+    std::cout << "Path 8: " << calculateDamage(8, 8, 0, 0, 8, 0, 0) << std::endl;
+    std::cout << "Path 9: " << calculateDamage(50, 50, 0, 0, 8, 0, 0) << std::endl;
     return 0;
 }
